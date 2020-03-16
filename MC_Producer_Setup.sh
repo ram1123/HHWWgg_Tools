@@ -14,6 +14,7 @@ chosen_events=$2
 chosen_jobs=$3
 chosen_filename=$4
 #chosen_pileup=$5 
+back_path_when_exit=$6
 
 #echo "all variables: $@"
 
@@ -318,7 +319,8 @@ end_script(){
 
     #echo "Finished desired step: $chosen_step "
     echo "Exiting"
-    cd /afs/cern.ch/work/a/atishelm/private/HHWWgg_Tools
+    #cd /uscms/home/rasharma/nobackup/double-higgs/HH_WWgg
+    cd ${back_path_when_exit}
     return;
     #exit 1;
 }
@@ -333,4 +335,6 @@ shuffle_PU(){
 }
 
 # Currently assuming MCM chain of commands for fragments created with CMSSW_9_3_9_patch1 
-source /afs/cern.ch/work/a/atishelm/private/HHWWgg_Tools/MC_Producer_939.sh 
+#source /uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/MC_Producer_939.sh 
+source ${back_path_when_exit}/MC_Producer_939.sh 
+#source /afs/cern.ch/work/a/atishelm/private/HH_WWgg/MC_Producer_939.sh 

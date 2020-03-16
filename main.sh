@@ -3,6 +3,9 @@
 # For each MC configuration, submit a crab job 
 # This is currently only configured for fragments created in CMSSW_9_3_9_patch1 
 
+# User defined values
+working_dir="/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg"
+
 #unset jsonkeys 
 jsonkeys=(step events jobs_jobsize fragment_directory pileup)
  
@@ -78,8 +81,14 @@ for i in $(seq 0 $max_el)
 do 
     :
     echo "Submitting crab job $i"
-    cd /afs/cern.ch/work/a/atishelm/private/HHWWgg_Tools
-    source /afs/cern.ch/work/a/atishelm/private/HHWWgg_Tools/MC_Producer_Setup.sh ${saved_array_0[$i]} ${saved_array_1[$i]} ${saved_array_2[$i]} ${saved_array_3[$i]} ${saved_array_4[$i]}
+    echo "pwd (rk) = $PWD"
+    cd $PWD
+    #cd $working_dir
+    #cd /uscms/home/rasharma/nobackup/double-higgs/HH_WWgg
+    #echo "/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/MC_Producer_Setup.sh ${saved_array_0[$i]} ${saved_array_1[$i]} ${saved_array_2[$i]} ${saved_array_3[$i]} ${saved_array_4[$i]}"
+    echo "$PWD/MC_Producer_Setup.sh ${saved_array_0[$i]} ${saved_array_1[$i]} ${saved_array_2[$i]} ${saved_array_3[$i]} ${saved_array_4[$i]} ${PWD}"
+    source $PWD/MC_Producer_Setup.sh ${saved_array_0[$i]} ${saved_array_1[$i]} ${saved_array_2[$i]} ${saved_array_3[$i]} ${saved_array_4[$i]} ${PWD}
+    #source /uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/MC_Producer_Setup.sh ${saved_array_0[$i]} ${saved_array_1[$i]} ${saved_array_2[$i]} ${saved_array_3[$i]} ${saved_array_4[$i]}
 
 done 
 

@@ -7,3 +7,9 @@ cmssw_configs/*
 testing_python.py
 NN/*
 Madgraph/*
+*.root
+*.png
+crab_projects/*
+*/myplots/*
+crab.log
+*CrabConfig.py

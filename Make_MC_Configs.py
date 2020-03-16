@@ -14,17 +14,47 @@ MC_Configs = '['
 
 ## GEN-SIM Setup Example 
 
-# step = "GEN-SIM"
-# nEvents = 100
-# jobs_jobsize = 1
-# masses = [250]
-# finalStates = ["qqlnugg"]
+step = "GEN-SIM"
+nEvents = 50000
+jobs_jobsize = 200
+masses = [250]
+finalStates = ["qqqqgg"]
+directory_prefix = "/eos/uscms/store/user/rasharma/double-higgs/SignalSample/"
 
 ## Setup for fully leptonic GEN-SIM production 
-step = "GEN-SIM"
-nEvents = 1000
-jobs_jobsize = 1
-masses = [250]
+# step = "GEN-SIM"
+# nEvents = 100000
+# jobs_jobsize = 200
+# masses = [260, 270, 280, 300, 320, 350, 400, 500, 550, 600, 650, 700, 800, 850, 900, 1000]
+# finalStates = ["lnulnugg"]
+
+## DR1, DR2 and MINIAOD setup example
+#step = "MINIAOD" # can also put "DR2" or "MINIAOD" here 
+#prevStep_prefix = "wPU_DR2" # if step == DR1: this = GEN-SIM. if step == DR2 with pileup: this = wPU_DR1 
+#nEvents = 100000 
+#jobs_jobsize = 1 
+#directory_prefix = "/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/" # location of GEN-SIM, DR1 or DR2 output files 
+#pileup = "wPU"
+#masses = ['X260', 'X270', 'X280', 'X300', 'X320', 'X350', 'X400', 'X500', 'X550', 'X600', 'X650', 'X700', 'X800', 'X850', 'X900', 'X1000']
+#finalStates = ["qqlnugg"]
+
+## Fully leptonic DR1 production example
+## DR1, DR2 and MINIAOD setup example
+# step = "DR1" # can also put "DR2" or "MINIAOD" here 
+# nEvents = 100000 
+# jobs_jobsize = 1 
+# directory_prefix = "/path/to/GEN-SIM/output" # location of GEN-SIM, DR1 or DR2 output files. Should contain directories with names like ggF_X260_WWgg_lnulnugg, ggF_X280_WWgg_lnulnugg, etc. 
+# pileup = "wPU"
+# masses = ['X260', 'X270', 'X280', 'X300', 'X320', 'X350', 'X400', 'X500', 'X550', 'X600', 'X650', 'X700', 'X800', 'X850', 'X900', 'X1000']
+# finalStates = ["lnulnugg"]
+
+dir_list = os.listdir(directory_prefix) 
+  
+# print("Files and directories in '", directory_prefix, "' :")  
+  
+# print the list 
+# print(dir_list) 
+
 # masses = [260, 270, 280, 300, 320, 350, 400, 500, 550, 600, 650, 700, 800, 850, 900, 1000]
 finalStates = ["lnulnugg"]
 
