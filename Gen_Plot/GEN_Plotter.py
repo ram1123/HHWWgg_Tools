@@ -17,7 +17,7 @@ from os import listdir
 print '.'
 print 'Plotting HH Variables'
 print '.'
-ol = '/eos/user/a/atishelm/www/HHWWgg_Analysis/GEN/'
+ol = '/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/Gen_Plot/myplots/'
 # me, genHandle = -1, Handle('vector<reco::GenParticle>')
 # summary = Handle('<LumiSummary>')
 # For each variable
@@ -34,9 +34,12 @@ for iv,v in enumerate(vs):
         mass = dir[2]
         channel = dir[3]  
 
+        print "direc = ",direc
+        print "rd = ",rd
         path_ends = [fp for fp in listdir(direc) if 'inLHE' not in fp]  # Save paths of non-LHE files
         #path_ends = [fp for fp in listdir(direc)]  # Save all paths 
         paths = []
+        #print "path_ends = ",path_ends
         for pa in path_ends:
             tmp_path = rd + pa
             paths.append(tmp_path)
@@ -44,6 +47,7 @@ for iv,v in enumerate(vs):
         # Get chosen particles to plot and number of them 
         pparams = []
         pparams = get_pparams(ptp)
+        print "pparams = ",pparams
         xbins = v[1]
         xmin = v[2]
         xmax = v[3] # Mass_Channel_Variable 
@@ -57,8 +61,9 @@ for iv,v in enumerate(vs):
             # Loop events 
             # Add to sum 
             for iev, event in enumerate(events):
-                if iev%100 == 0: print'on event',iev 
+                if iev%500 == 0: print'on event',iev 
                 if iev == me: break # Max events 
+                #print "event number = ",iev
                 
                 #event.getByLabel('prunedGenParticles', genHandle)
                 events.getByLabel('genParticles', genHandle)
@@ -71,9 +76,10 @@ for iv,v in enumerate(vs):
                     pdgIDs = params[2]
                     # ps = [p for p in genParticles if p.isHardProcess() and abs(p.daughter(0).pdgId() == 25)]
                     ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]
+                    #print "particle = ",ps[0].pdgId(),"\t",ps[1].pdgId()
 
                     # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 25)]   
-                    # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 22)]   
+                    #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 22)]   
                     # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]   
                     # for p in ps:
                     #     print'p = ',p.p4()
@@ -81,20 +87,18 @@ for iv,v in enumerate(vs):
                         val = ps[0].p4().pt() 
 
                     if nparticles == 2:
-
-
                         if v[0] == 'invm':
                             val = invmass(ps[0].p4(),ps[1].p4())
                             # val = ps[0].p4().pt()
-
                             # if particle == 'R':
                                 # avoid double count 
                             h1.Fill(val)
                             # get invmass 
                     else: 
                         for p in ps:
-                            val = eval("p." + v[0] + "()")
-                            h1.Fill(val)
+                            #val = eval("p." + v[0] + "()")
+                            val = ps[0].p4().pt()
+                            #h1.Fill(val)
         output_path = ol + mass + '_' + channel + '_' + particle + '_' + variable 
         c1 = ROOT.TCanvas()
         color = dir[4]
@@ -103,6 +107,7 @@ for iv,v in enumerate(vs):
         c1.SaveAs(output_path + ".png")
         h1.SaveAs(output_path + ".C")
         h1.SaveAs(output_path + ".root")    
+        print 'h1 entry = ',h1.GetEntries()
         histos.append(h1)
 
     print'histos = ',histos 

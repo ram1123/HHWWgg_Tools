@@ -14,11 +14,12 @@ MC_Configs = '['
 
 ## GEN-SIM Setup Example 
 
-# step = "GEN-SIM"
-# nEvents = 100
-# jobs_jobsize = 1
-# masses = [250]
-# finalStates = ["qqlnugg"]
+step = "GEN-SIM"
+nEvents = 50000
+jobs_jobsize = 200
+masses = [250]
+finalStates = ["qqqqgg"]
+directory_prefix = "/eos/uscms/store/user/rasharma/double-higgs/SignalSample/"
 
 ## Setup for fully leptonic GEN-SIM production 
 # step = "GEN-SIM"
@@ -28,14 +29,14 @@ MC_Configs = '['
 # finalStates = ["lnulnugg"]
 
 ## DR1, DR2 and MINIAOD setup example
-step = "MINIAOD" # can also put "DR2" or "MINIAOD" here 
-prevStep_prefix = "wPU_DR2" # if step == DR1: this = GEN-SIM. if step == DR2 with pileup: this = wPU_DR1 
-nEvents = 100000 
-jobs_jobsize = 1 
-directory_prefix = "/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/" # location of GEN-SIM, DR1 or DR2 output files 
-pileup = "wPU"
-masses = ['X260', 'X270', 'X280', 'X300', 'X320', 'X350', 'X400', 'X500', 'X550', 'X600', 'X650', 'X700', 'X800', 'X850', 'X900', 'X1000']
-finalStates = ["qqlnugg"]
+#step = "MINIAOD" # can also put "DR2" or "MINIAOD" here 
+#prevStep_prefix = "wPU_DR2" # if step == DR1: this = GEN-SIM. if step == DR2 with pileup: this = wPU_DR1 
+#nEvents = 100000 
+#jobs_jobsize = 1 
+#directory_prefix = "/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/" # location of GEN-SIM, DR1 or DR2 output files 
+#pileup = "wPU"
+#masses = ['X260', 'X270', 'X280', 'X300', 'X320', 'X350', 'X400', 'X500', 'X550', 'X600', 'X650', 'X700', 'X800', 'X850', 'X900', 'X1000']
+#finalStates = ["qqlnugg"]
 
 ## Fully leptonic DR1 production example
 ## DR1, DR2 and MINIAOD setup example

@@ -14,9 +14,9 @@
 # https://cms-pdmv.cern.ch/mcm/chained_requests?prepid=HIG-chain_RunIIFall17wmLHEGS_flowRunIIFall17DRPremixPU2017_flowRunIIFall17MiniAODv2_flowRunIIFall17NanoAOD-01374&page=0&shown=15
 
 #source /afs/cern.ch/work/a/atishelm/private/HH_WWgg/MC_Producer_Setup.sh
-source /afs/cern.ch/work/a/atishelm/private/HH_WWgg/Submit_Crab_GEN.sh
-source /afs/cern.ch/work/a/atishelm/private/HH_WWgg/Submit_Crab_postGEN.sh
-source /afs/cern.ch/work/a/atishelm/private/HH_WWgg/make_microAOD.sh
+source ${PWD}/Submit_Crab_GEN.sh
+source ${PWD}/Submit_Crab_postGEN.sh
+source ${PWD}/make_microAOD.sh
 
 # CMSSW version of gen step 
 version=939
@@ -80,16 +80,33 @@ then
     eval `scram runtime -sh`
 
     echo "Looking for pythia fragment at $PythiaFragPath"
+    echo "pwd = $PWD"
 
-    # curl -s --insecure https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIIFall17wmLHEGS-02565 --retry 2 --create-dirs -o Configuration/GenProduction/python/HIG-RunIIFall17wmLHEGS-02565-fragment.py 
-    # [ -s Configuration/GenProduction/python/HIG-RunIIFall17wmLHEGS-02565-fragment.py ] || exit $?;
+    # put appropriate fragment at appropriate path
+    mkdir -p Configuration/GenProduction/python
+    cp ../../fragments/FullyHadronic/ggF_X250_WWgg_qqqqgg.py Configuration/GenProduction/python/ggF_X250_WWgg_qqqqgg.py
 
+    #curl -s --insecure https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIIFall17wmLHEGS-02565 --retry 2 --create-dirs -o Configuration/GenProduction/python/HIG-RunIIFall17wmLHEGS-02565-fragment.py 
+    #curl -s --insecure https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/HIG-RunIIFall17wmLHEGS-02565 --retry 2 --create-dirs -o Configuration/GenProduction/python/ggF_X250_WWgg_qqqqgg.py 
+     #[ -s Configuration/GenProduction/python/ggF_X250_WWgg_qqqqgg.py ] || exit $?;
+     #[ -s Configuration/GenProduction/python/HIG-RunIIFall17wmLHEGS-02565-fragment.py ] || exit $?;
+     echo "print pwd after curl = ${PWD}"
+
+    #mkdir -p CMSSW_9_3_9_patch1/src/Configuration/GenProduction/python
+    #cp /uscms/home/rasharma/nobackup/double-higgs/CMSSW_9_3_9_patch1/src/Configuration/GenProduction/python/ggF_X250_WWgg_qqqqgg.py CMSSW_9_3_9_patch1/src/Configuration/GenProduction/python/ 
+    echo "print pwd: $PWD"
+    echo "ls of config"
+    ls CMSSW_9_3_9_patch1/src/Configuration/GenProduction/python/
+    ConfigFileName="ggF_X250_WWgg_qqqqgg_50000events_GEN-SIM_CrabConfig.py"
+    echo "..............rk"
     chosen_threads=8
 
     scram b
     cd ../../
     seed=$(date +%s)
+    echo "cmsDriver.py $PythiaFragPath --fileout file:$GenSimOutput --mc --eventcontent RAWSIM,LHE --datatier GEN-SIM,LHE --conditions 93X_mc2017_realistic_v3 --beamspot Realistic25ns13TeVEarly2017Collision --step LHE,GEN,SIM --nThreads $chosen_threads --geometry DB:Extended --era Run2_2017 --python_filename $ConfigFileName --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=\"int(${seed}%100)\" -n $chosen_events"
     cmsDriver.py $PythiaFragPath --fileout file:$GenSimOutput --mc --eventcontent RAWSIM,LHE --datatier GEN-SIM,LHE --conditions 93X_mc2017_realistic_v3 --beamspot Realistic25ns13TeVEarly2017Collision --step LHE,GEN,SIM --nThreads $chosen_threads --geometry DB:Extended --era Run2_2017 --python_filename $ConfigFileName --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${seed}%100)" -n $chosen_events
+    echo "========================="
 
     # Without LHE. Not sure if this works. I think it fails. 
     #cmsDriver.py $PythiaFragPath --fileout file:$GenSimOutput --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 93X_mc2017_realistic_v3 --beamspot Realistic25ns13TeVEarly2017Collision --step GEN,SIM --nThreads $chosen_threads --geometry DB:Extended --era Run2_2017 --python_filename $ConfigFileName --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${seed}%100)" -n $chosen_events

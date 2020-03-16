@@ -20,10 +20,10 @@ submit_crab_GEN(){
     num_jobs=$5
     echo "chosen threads: $chosen_threads "
 
-    localWorkingArea="/afs/cern.ch/work/a/atishelm/private/HH_WWgg/"
+    localWorkingArea="/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/"
 
     cd $localWorkingArea$3/src/ # Directory where config file was conceived. Need to be in same CMSSW for crab config 
-    #echo "pwd = $PWD"
+    echo "pwd = $PWD"
     #cmsenv
 
     # Check if there is a VOMS proxy for using CRAB 
@@ -31,7 +31,8 @@ submit_crab_GEN(){
 
     # Source CRAB 
     source /cvmfs/cms.cern.ch/crab3/crab.sh
-    cmsenv
+    eval `scramv1 runtime -sh`   # alias of this is cmsenv
+    #cmsenv
 
     # Create CRAB Config file 
     IDName=$1 # Decay identifying name. Anything unique about the process should be contained in the pythia fragment file name 
@@ -72,6 +73,7 @@ submit_crab_GEN(){
 
     # if crab working area already exists, increment to unique name 
     working_area=$localWorkingArea$cmssw_v/src/crab_projects/crab_$IDName
+    echo "working_area = $working_area"
     # working_area=/afs/cern.ch/work/a/atishelm/private/HH_WWgg/$cmssw_v/src/crab_projects/crab_$IDName
 
     # Do until unused working area name is found 
@@ -84,7 +86,9 @@ submit_crab_GEN(){
             # If default working area doesn't exist, use this name 
             if [ ! -d $working_area ]; then 
 
+		echo "DEBUG: Checkpoint 1"
                 echo "Creating crab working area: '$working_area' for this crab request"
+		mkdir -p $working_area
                 # No need to increment IDName 
                 break 
         
@@ -95,10 +99,13 @@ submit_crab_GEN(){
             tmp_IDName=$IDName
             tmp_IDName+=_$i 
             working_area=$localWorkingArea$cmssw_v/src/crab_projects/crab_$tmp_IDName 
+	    echo "DEBUG: Checkpoint 2"
             # working_area=/afs/cern.ch/work/a/atishelm/private/HH_WWgg/$cmssw_v/src/crab_projects/crab_$tmp_IDName 
             if [ ! -d $working_area ]; then
 
+		echo "DEBUG: Checkpoint 3"
                 echo "Creating crab working area: '$working_area' for this crab request"
+		mkdir -p $working_area
                 IDName=$tmp_IDName 
                 # Use incremented IDName 
                 break 
@@ -148,7 +155,7 @@ submit_crab_GEN(){
     #echo "NJOBS = 1  # This is not a configuration parameter, but an auxiliary variable that we use in the next line." >> TmpCrabConfig.py
     echo "config.Data.totalUnits = config.Data.unitsPerJob * NJOBS" >> TmpCrabConfig.py # Total number of events over all jobs (files) 
     #echo "#config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB()) " >> TmpCrabConfig.py
-    echo "config.Data.outLFNDirBase = '/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/'" >> TmpCrabConfig.py
+    echo "config.Data.outLFNDirBase = '/store/user/rasharma/double-higgs/SignalSample/'" >> TmpCrabConfig.py
     #echo "config.Data.outLFNDirBase = '/store/user/atishelm/'" >> TmpCrabConfig.py
     #echo "config.Data.outLFNDirBase = '/store/user/atishelm/'" >> TmpCrabConfig.py
     echo "config.Data.publication = False" >> TmpCrabConfig.py
@@ -156,15 +163,17 @@ submit_crab_GEN(){
     echo "config.Data.outputDatasetTag = '$snddset'" >> TmpCrabConfig.py
     #echo "config.Data.userInputFiles = ['/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/MinBias/ggF_X1000_WWgg_enuenugg_woPU_10000events_woPU/190116_184220/0000/ggF_X1000_WWgg_enuenugg_woPU_10000events_1.root'] # If DR1 step, this should be GEN file " >> TmpCrabConfig.py
     echo " " >> TmpCrabConfig.py
-    echo "config.Site.whitelist = ['T2_CH_CERN']" >> TmpCrabConfig.py # 939   
-    echo "config.Site.storageSite = 'T2_CH_CERN'" >> TmpCrabConfig.py
+    echo "config.Site.whitelist = ['T3_US_FNALLPC']" >> TmpCrabConfig.py # 939   
+    echo "config.Site.storageSite = 'T3_US_FNALLPC'" >> TmpCrabConfig.py
 
     cp TmpCrabConfig.py $ccname
+    echo "pwd = $PWD"
     mv $ccname ../../crab_configs/$ccname  # Will this work? 
     rm TmpCrabConfig.py 
 
     #crab submit -c $ccname 
-    crab submit -c ../../crab_configs/$ccname
+    cd ../../
+    crab submit -c crab_configs/$ccname
     crab status 
 
     }

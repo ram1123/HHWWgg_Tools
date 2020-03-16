@@ -8,16 +8,16 @@ from DataFormats.FWLite import Handle, Runs, Lumis, Events
 
 genHandle = Handle('vector<reco::GenParticle>')
 summary = Handle('LumiSummary')
-outputLoc = '/eos/user/a/atishelm/www/HHWWgg_Analysis/GEN' 
+outputLoc = '/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/Gen_Plot/myplots/' 
 
 # Particles 
 ptp = []
 
 #ptp.append('R')
 # ptp.append('b')
-# ptp.append('g')
+#ptp.append('g')
 ptp.append('H')
-# ptp.append('W')
+#ptp.append('W')
 #ptp.append(all_particles["H"]) 
 #ptp.append(all_particles["W"]) 
 
@@ -28,9 +28,10 @@ fs = []
 
 
 # d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/test/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/test/','SM','SL','ROOT.kRed'])
-d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X400_WWgg_qqlnugg/100000events_GEN-SIM/191128_153853/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X400_WWgg_qqlnugg/100000events_GEN-SIM/191128_153853/0000/','X400','SL','ROOT.kRed'])
-d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X450_WWgg_qqlnugg/100000events_GEN-SIM/191128_153916/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X450_WWgg_qqlnugg/100000events_GEN-SIM/191128_153916/0000/','X450','SL','ROOT.kRed'])
-d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_SM_WWgg_qqlnugg/100000events_GEN-SIM/191128_153938/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_SM_WWgg_qqlnugg/100000events_GEN-SIM/191128_153938/0000/','SM','SL','ROOT.kRed'])
+#d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X400_WWgg_qqlnugg/100000events_GEN-SIM/191128_153853/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X400_WWgg_qqlnugg/100000events_GEN-SIM/191128_153853/0000/','X400','SL','ROOT.kRed'])
+d.append(['/eos/uscms/store/user/rasharma/double-higgs/SignalSample/ggF_X250_WWgg_qqqqgg/50000events_GEN-SIM_CrabConfig/200315_192048/0000/','root://cmsxrootd.fnal.gov//store/user/rasharma/double-higgs/SignalSample/ggF_X250_WWgg_qqqqgg/50000events_GEN-SIM_CrabConfig/200315_192048/0000/','X400','SL','ROOT.kRed'])
+#d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X450_WWgg_qqlnugg/100000events_GEN-SIM/191128_153916/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X450_WWgg_qqlnugg/100000events_GEN-SIM/191128_153916/0000/','X450','SL','ROOT.kRed'])
+#d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_SM_WWgg_qqlnugg/100000events_GEN-SIM/191128_153938/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_SM_WWgg_qqlnugg/100000events_GEN-SIM/191128_153938/0000/','SM','SL','ROOT.kRed'])
 
 # 250 GeVggs/resonant_HH/RunII/MicroAOD/HHWWggSign
 # d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X250_WWgg_qqlnugg/100000events_GEN-SIM/190618_093349/0000/','root://cmsxrootd.fnal.gov//store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/ggF_X250_WWgg_qqlnugg/100000events_GEN-SIM/190618_093349/0000/','X250','SL','ROOT.kRed'])
@@ -51,22 +52,22 @@ d.append(['/eos/cms/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSign
 # https://root.cern.ch/doc/v612/namespaceROOT_1_1Math_1_1VectorUtil.htmlC
 
 dphi = ROOT.Math.VectorUtil.DeltaPhi
-#deltaR = ROOT.Math.VectorUtil.DeltaR
+deltaR = ROOT.Math.VectorUtil.DeltaR
 #Wphi = ROOT.Math.VectorUtil.Phi_0_2pi
 invmass = ROOT.Math.VectorUtil.InvariantMass
 #invmass = Math.VectorUtil.InvariantMass
 # need to be methods of reco::GenParticle 
 # need to do something different if it requires full vectors like angle between or invariant mass 
 vs = []
-# vs.append(['px',100,-1000,1000]) 
-# vs.append(['py',100,-1000,1000])
-# vs.append(['pz',100,-1000,1000])
+#vs.append(['px',100,-1000,1000]) 
+#vs.append(['py',100,-1000,1000])
+#vs.append(['pz',100,-1000,1000])
 # eta
 # phi 
 # E 
 #vs.append(['pt',100,0,1000])
-# vs.append(['pt',100,0,1000,'ls']) #ls = plot leading and subleading. l = leading. s = subleading 
-# vs.append(['invm',75,250,1000]) # Invariant mass
+#vs.append(['pt',100,0,1000,'ls']) #ls = plot leading and subleading. l = leading. s = subleading 
+#vs.append(['invm',75,250,1000]) # Invariant mass
 vs.append(['invm',100,0,1000]) # Invariant mass
 # vs.append(['invm',10,120,130]) # Invariant mass
 
@@ -86,11 +87,11 @@ def get_pparams(ptp_):
     "b": ['b',0,[5]],
     "W": ['W',2,[24]], # W boson
     "g": ['g',2,[22]], # photon
-    "R": ['R',1,[]], # radion 
-    # "q": ['q',0,[1,2,3,4,5]], # quark   # later make flavor subcategories
+    #"R": ['R',1,[]], # radion 
+    "q": ['q',4,[1,2,3,4,5]], # quark   # later make flavor subcategories
 
-    # "l": ['l',0,[11,13]], # lepton
-    # "nu": ['nu',0,[12,14]] # neutrino 
+    "l": ['l',0,[11,13]], # lepton
+    "nu": ['nu',0,[12,14]] # neutrino 
     }
 
     # # Can make subcategories of Same Flavor, Different Flavors 

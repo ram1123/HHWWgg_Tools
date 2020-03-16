@@ -17,7 +17,7 @@ submit_crab_postGEN(){
 
     #!/bin/bash
 
-    localWorkingArea="/afs/cern.ch/work/a/atishelm/private/HH_WWgg/"
+    localWorkingArea="/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/"
 
     unset file_paths # Make sure array name is free in memory 
     declare -a file_paths # unassociative array 
@@ -214,8 +214,8 @@ submit_crab_postGEN(){
 
     echo "config.Data.userInputFiles = [$path_list] # If DR1 step, this should be GEN file(s) " >> TmpCrabConfig.py # input files 
     echo " " >> TmpCrabConfig.py
-    echo "config.Site.whitelist = ['T2_CH_CERN']" >> TmpCrabConfig.py # might need this..might not. I'm not sure. 
-    echo "config.Site.storageSite = 'T2_CH_CERN'" >> TmpCrabConfig.py
+    echo "config.Site.whitelist = ['T3_US_FNALLPC']" >> TmpCrabConfig.py # might need this..might not. I'm not sure. 
+    echo "config.Site.storageSite = 'T3_US_FNALLPC'" >> TmpCrabConfig.py
 
     # Now using multiple cmssw version, so will have a crab_configs and cmssw_configs folder for each CMSSW 
     
