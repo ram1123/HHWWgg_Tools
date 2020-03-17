@@ -53,6 +53,14 @@ for iv,v in enumerate(vs):
         xmax = v[3] # Mass_Channel_Variable 
         plot_title = mass + ', ' + channel 
         h1 = ROOT.TH1F('h1',plot_title,xbins,xmin,xmax)
+        h_pdgID_isHardProcess = ROOT.TH1F('h_pdgID_isHardProcess', 'particles from isHardProcess',30,0,30)
+        h_pdgID_isHardProcess_status = ROOT.TH1F('h_pdgID_isHardProcess_status', 'particles from isHardProcess',30,0,30)
+        h_pdgID_isHardProcess_status_q = ROOT.TH1F('h_pdgID_isHardProcess_status_q', 'particles from isHardProcess from q',30,0,30)
+        h_pdgID_isHardProcess_status_g = ROOT.TH1F('h_pdgID_isHardProcess_status_g', 'particles from isHardProcess from g',30,0,30)
+        h_pdgID_isHardProcess_status_a = ROOT.TH1F('h_pdgID_isHardProcess_status_a', 'particles from isHardProcess from a',30,0,30)
+        h_pdgID_isHardProcess_status_w = ROOT.TH1F('h_pdgID_isHardProcess_status_w', 'particles from isHardProcess from w',30,0,30)
+        h_pdgID_isHardProcess_status_h = ROOT.TH1F('h_pdgID_isHardProcess_status_h', 'particles from isHardProcess from h',30,0,30)
+        count_events = 0
         for ip,path in enumerate(paths):
             if ip == max_files: break 
             print '    Processing file ', ip+1, ': ',path 
@@ -61,6 +69,7 @@ for iv,v in enumerate(vs):
             # Loop events 
             # Add to sum 
             for iev, event in enumerate(events):
+                count_events += 1
                 if iev%500 == 0: print'on event',iev 
                 if iev == me: break # Max events 
                 #print "event number = ",iev
@@ -68,47 +77,102 @@ for iv,v in enumerate(vs):
                 #event.getByLabel('prunedGenParticles', genHandle)
                 events.getByLabel('genParticles', genHandle)
                 genParticles = genHandle.product()
+                events.getByLabel('ak4GenJets', ak4genHandle)
+                ak4GenJets = ak4genHandle.product()
+                events.getByLabel('ak8GenJets', ak8genHandle)
+                ak8GenJets = ak4genHandle.product()
 
                 # Fill histograms with current variable 
                 for params in pparams:
                     particle = params[0]
                     nparticles = params[1]
                     pdgIDs = params[2]
-                    # ps = [p for p in genParticles if p.isHardProcess() and abs(p.daughter(0).pdgId() == 25)]
-                    ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]
+                    #print "particle = ",particle,"\tnparticles = ",nparticles,"\tpdgIDs = ",pdgIDs
+                    #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]
+                    print "="*30
+                    for p in genParticles:
+                       if p.isHardProcess():
+                          h_pdgID_isHardProcess.Fill(p.pdgId())
+                          h_pdgID_isHardProcess_status.Fill(p.status())
+                          if abs(p.pdgId()) < 5: h_pdgID_isHardProcess_status_q.Fill(p.status())
+                          if abs(p.pdgId()) == 21: h_pdgID_isHardProcess_status_g.Fill(p.status())
+                          if abs(p.pdgId()) == 22: h_pdgID_isHardProcess_status_a.Fill(p.status())
+                          if abs(p.pdgId()) == 24: h_pdgID_isHardProcess_status_w.Fill(p.status())
+                          if abs(p.pdgId()) == 25: h_pdgID_isHardProcess_status_h.Fill(p.status())
+                          if p.pdgId() == -24: print p.daughter(0).pdgId(),"\t",p.daughter(1).pdgId()
+                          if p.pdgId() == 24: print p.daughter(0).pdgId(),"\t",p.daughter(1).pdgId()
+                          if abs(p.pdgId()) < 5:
+                             print p.pdgId(),"\t",p.mother(0).pdgId()
+                          #print p.pdgId()
+                       #if p.isHardProcess() and abs(p.pdgId()) == 24: 
+                       #if abs(p.pdgId()) == 24: 
+                       #   print p.pdgId(),"\t",p.status(),"\t",type(p)
+                    #print "="*30
+                    #for p in ak4GenJets:
+                    #   print p.pt()
+                    #print "="*30
+                    #for p in ak8GenJets:
+                    #   print p.pt()
+                    #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 22)]   
                     #print "particle = ",ps[0].pdgId(),"\t",ps[1].pdgId()
+                    #print "particles = ",type(ps),"\t",ps[0].pdgId()
+                    #for i, pp in enumerate(ps):
+                    #   print type(pp),"\t",pp.pdgId()
+                    #for i,p in enumerate(ps): print p[i].pdgId(),"\t",
+                    #print "\n\n.....\n"
 
                     # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 25)]   
-                    #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 22)]   
                     # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]   
                     # for p in ps:
                     #     print'p = ',p.p4()
-                    if v[0] == 'pt':
-                        val = ps[0].p4().pt() 
+                    #if v[0] == 'pt':
+                    #    val = ps[0].p4().pt() 
 
-                    if nparticles == 2:
-                        if v[0] == 'invm':
-                            val = invmass(ps[0].p4(),ps[1].p4())
-                            # val = ps[0].p4().pt()
-                            # if particle == 'R':
-                                # avoid double count 
-                            h1.Fill(val)
-                            # get invmass 
-                    else: 
-                        for p in ps:
-                            #val = eval("p." + v[0] + "()")
-                            val = ps[0].p4().pt()
-                            #h1.Fill(val)
+                    #if nparticles == 4:
+                    #    if v[0] == 'invm':
+                    #        val = invmass(ps[0].p4(),ps[1].p4())
+                    #        # val = ps[0].p4().pt()
+                    #        # if particle == 'R':
+                    #            # avoid double count 
+                    #        h1.Fill(val)
+                    #        # get invmass 
+                    #else: 
+                    #    for p in ps:
+                    #        #val = eval("p." + v[0] + "()")
+                    #        val = ps[0].p4().pt()
+                    #        #h1.Fill(val)
         output_path = ol + mass + '_' + channel + '_' + particle + '_' + variable 
         c1 = ROOT.TCanvas()
         color = dir[4]
-        h1.SetLineColor(eval(color))
-        h1.Draw() 
-        c1.SaveAs(output_path + ".png")
-        h1.SaveAs(output_path + ".C")
-        h1.SaveAs(output_path + ".root")    
-        print 'h1 entry = ',h1.GetEntries()
-        histos.append(h1)
+        h_pdgID_isHardProcess.SetLineColor(eval(color))
+        h_pdgID_isHardProcess.Draw() 
+        c1.SaveAs("h_pdgID_isHardProcess" + ".png")
+        h_pdgID_isHardProcess.SaveAs("h_pdgID_isHardProcess" + ".C")
+        h_pdgID_isHardProcess.SaveAs("h_pdgID_isHardProcess" + ".root")    
+        c1.SetLogy(1)
+        c1.SaveAs("h_pdgID_isHardProcess" + "Log.png")
+        c1.SetLogy(0)
+        h_pdgID_isHardProcess_status.SetLineColor(eval(color))
+        h_pdgID_isHardProcess_status.Draw() 
+        c1.SaveAs("h_pdgID_isHardProcess_status" + ".png")
+        h_pdgID_isHardProcess_status.SaveAs("h_pdgID_isHardProcess_status" + ".C")
+        h_pdgID_isHardProcess_status.SaveAs("h_pdgID_isHardProcess_status" + ".root")    
+        c1.SetLogy(1)
+        c1.SaveAs("h_pdgID_isHardProcess_status" + "Log.png")
+        c1.SetLogy(0)
+        h_pdgID_isHardProcess_status_q.Draw()
+        c1.SaveAs("h_pdgID_isHardProcess_status_q.png")
+        h_pdgID_isHardProcess_status_g.Draw()
+        c1.SaveAs("h_pdgID_isHardProcess_status_g.png")
+        h_pdgID_isHardProcess_status_a.Draw()
+        c1.SaveAs("h_pdgID_isHardProcess_status_a.png")
+        h_pdgID_isHardProcess_status_w.Draw()
+        c1.SaveAs("h_pdgID_isHardProcess_status_w.png")
+        h_pdgID_isHardProcess_status_h.Draw()
+        c1.SaveAs("h_pdgID_isHardProcess_status_h.png")
+        print 'h_pdgID_isHardProcess entry = ',h_pdgID_isHardProcess.GetEntries()
+        histos.append(h_pdgID_isHardProcess)
+        print "total events = ",count_events
 
     print'histos = ',histos 
 

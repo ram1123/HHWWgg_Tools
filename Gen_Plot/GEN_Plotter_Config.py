@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 # Configuration for GEN_Plotter.py 
-# from ROOT import * 
-# from ROOT import kGreen 
 import ROOT 
 from DataFormats.FWLite import Handle, Runs, Lumis, Events
 
 genHandle = Handle('vector<reco::GenParticle>')
+ak4genHandle = Handle('vector<reco::GenJet>')
+ak8genHandle = Handle('vector<reco::GenJet>')
 summary = Handle('LumiSummary')
 outputLoc = '/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/Gen_Plot/myplots/' 
 
@@ -17,6 +17,7 @@ ptp = []
 # ptp.append('b')
 #ptp.append('g')
 ptp.append('H')
+#ptp.append('q')
 #ptp.append('W')
 #ptp.append(all_particles["H"]) 
 #ptp.append(all_particles["W"]) 
@@ -127,7 +128,7 @@ def get_pparams(ptp_):
 
 # def create_h():
 me = -1 # max events 
-max_files= 1 # max files
+max_files= 5 # max files
 
 def order_particles(ps_):
     max_pt = 0
