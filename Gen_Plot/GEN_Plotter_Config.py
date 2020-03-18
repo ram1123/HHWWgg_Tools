@@ -128,7 +128,25 @@ def get_pparams(ptp_):
 
 # def create_h():
 me = -1 # max events 
-max_files= 5 # max files
+max_files= 51 # max files
+
+def order_particle_4vec(p4v):
+    max_pt = 0
+
+    temp_p4v = []
+
+    pt1 = p4v[0].pt()
+    pt2 = p4v[1].pt()
+
+    if pt1 < pt2 :
+       temp_p4v.append(p4v[1])
+       temp_p4v.append(p4v[0])
+    else:
+       temp_p4v.append(p4v[0])
+       temp_p4v.append(p4v[1])
+
+    return temp_p4v
+
 
 def order_particles(ps_):
     max_pt = 0

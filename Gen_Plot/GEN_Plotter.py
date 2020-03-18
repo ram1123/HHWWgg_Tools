@@ -51,15 +51,77 @@ for iv,v in enumerate(vs):
         xbins = v[1]
         xmin = v[2]
         xmax = v[3] # Mass_Channel_Variable 
+
+        #Ha1 = ROOT.TLorentzVector()
+        #Ha2 = ROOT.TLorentzVector()
+        #Ha = ROOT.TLorentzVector()
+        #HW1J1 = ROOT.TLorentzVector()
+        #HW1J2 = ROOT.TLorentzVector()
+        #HW1 = ROOT.TLorentzVector()
+        #HW2J1 = ROOT.TLorentzVector()
+        #HW2J2 = ROOT.TLorentzVector()
+        #HW2 = ROOT.TLorentzVector()
+        #HW = ROOT.TLorentzVector()
+
+
+
         plot_title = mass + ', ' + channel 
         h1 = ROOT.TH1F('h1',plot_title,xbins,xmin,xmax)
         h_pdgID_isHardProcess = ROOT.TH1F('h_pdgID_isHardProcess', 'particles from isHardProcess',30,0,30)
-        h_pdgID_isHardProcess_status = ROOT.TH1F('h_pdgID_isHardProcess_status', 'particles from isHardProcess',30,0,30)
-        h_pdgID_isHardProcess_status_q = ROOT.TH1F('h_pdgID_isHardProcess_status_q', 'particles from isHardProcess from q',30,0,30)
-        h_pdgID_isHardProcess_status_g = ROOT.TH1F('h_pdgID_isHardProcess_status_g', 'particles from isHardProcess from g',30,0,30)
-        h_pdgID_isHardProcess_status_a = ROOT.TH1F('h_pdgID_isHardProcess_status_a', 'particles from isHardProcess from a',30,0,30)
-        h_pdgID_isHardProcess_status_w = ROOT.TH1F('h_pdgID_isHardProcess_status_w', 'particles from isHardProcess from w',30,0,30)
-        h_pdgID_isHardProcess_status_h = ROOT.TH1F('h_pdgID_isHardProcess_status_h', 'particles from isHardProcess from h',30,0,30)
+        h_pdgID_isHardProcess_status = ROOT.TH1F('h_pdgID_isHardProcess_status', 'particles from isHardProcess status',30,0,30)
+        h_pdgID_isHardProcess_status_q = ROOT.TH1F('h_pdgID_isHardProcess_status_q', 'particles from isHardProcess status from q',30,0,30)
+        h_pdgID_isHardProcess_status_g = ROOT.TH1F('h_pdgID_isHardProcess_status_g', 'particles from isHardProcess status from g',30,0,30)
+        h_pdgID_isHardProcess_status_a = ROOT.TH1F('h_pdgID_isHardProcess_status_a', 'particles from isHardProcess status from a',30,0,30)
+        h_pdgID_isHardProcess_status_w = ROOT.TH1F('h_pdgID_isHardProcess_status_w', 'particles from isHardProcess status from w',30,0,30)
+        h_pdgID_isHardProcess_status_h = ROOT.TH1F('h_pdgID_isHardProcess_status_h', 'particles from isHardProcess status from h',30,0,30)
+
+        h1_Photon0_pt = ROOT.TH1F("h1_Photon0_pt", ";Leading Photon p_{T} (GeV);",35,0,700)
+        h1_Photon1_pt = ROOT.TH1F("h1_Photon1_pt", "",35,0,700)
+        h1_Photon0_eta = ROOT.TH1F("h1_Photon0_eta", "",25,-5,5)
+        h1_Photon1_eta = ROOT.TH1F("h1_Photon1_eta", "",25,-5,5)
+        h1_Photon0_phi = ROOT.TH1F("h1_Photon0_phi", "",25,-5,5)
+        h1_Photon1_phi = ROOT.TH1F("h1_Photon1_phi", "",25,-5,5)
+        h1_Photon_dR = ROOT.TH1F("h1_Photon_dR", "",25,0,6)
+        h2_Photon_dR_pT = ROOT.TH2F("h2_Photon_dR_pT", "", 25,0,6, 35,0,700)
+        h1_Photon_InvMass = ROOT.TH1F("h1_Photon_InvMass", "",55,115,135)
+        h1_WPlusJets0_pt = ROOT.TH1F("h1_WPlusJets0_pt", "",35,0,700)
+        h1_WPlusJets1_pt = ROOT.TH1F("h1_WPlusJets1_pt", "",35,0,700)
+        h1_WPlusJets0_eta = ROOT.TH1F("h1_WPlusJets0_eta", "",25,-5,5)
+        h1_WPlusJets1_eta = ROOT.TH1F("h1_WPlusJets1_eta", "",25,-5,5)
+        h1_WPlusJets0_phi = ROOT.TH1F("h1_WPlusJets0_phi", "",25,-5,5)
+        h1_WPlusJets1_phi = ROOT.TH1F("h1_WPlusJets1_phi", "",25,-5,5)
+        h1_WPlusJets_dR = ROOT.TH1F("h1_WPlusJets_dR", "",25,0,6)
+        h2_WPlusJets_dR_pT = ROOT.TH2F("h2_WPlusJets_dR_pT", "", 25,0,6, 35,0,700)
+        h1_WMinusJets0_pt = ROOT.TH1F("h1_WMinusJets0_pt", "",35,0,700)
+        h1_WMinusJets1_pt = ROOT.TH1F("h1_WMinusJets1_pt", "",35,0,700)
+        h1_WMinusJets0_eta = ROOT.TH1F("h1_WMinusJets0_eta", "",25,-5,5)
+        h1_WMinusJets1_eta = ROOT.TH1F("h1_WMinusJets1_eta", "",25,-5,5)
+        h1_WMinusJets0_phi = ROOT.TH1F("h1_WMinusJets0_phi", "",25,-5,5)
+        h1_WMinusJets1_phi = ROOT.TH1F("h1_WMinusJets1_phi", "",25,-5,5)
+        h1_WMinusJets_dR = ROOT.TH1F("h1_WMinusJets_dR", "",25,0,6)
+        h2_WMinusJets_dR_pT = ROOT.TH2F("h2_WMinusJets_dR_pT", "", 25,0,6, 35,0,700)
+        h1_WMinusCal_pt = ROOT.TH1F("h1_WMinusCal_pt", "",35,0,700)
+        h1_WMinusCal_eta = ROOT.TH1F("h1_WMinusCal_eta", "",25,-5,5)
+        h1_WMinusCal_phi = ROOT.TH1F("h1_WMinusCal_phi", "",25,-5,5)
+        h1_WMinusCal_InvMass = ROOT.TH1F("h1_WMinusCal_InvMass", "",55,70,90)
+        h1_WPlusCal_pt = ROOT.TH1F("h1_WPlusCal_pt", "",35,0,700)
+        h1_WPlusCal_eta = ROOT.TH1F("h1_WPlusCal_eta", "",25,-5,5)
+        h1_WPlusCal_phi = ROOT.TH1F("h1_WPlusCal_phi", "",25,-5,5)
+        h1_WPlusCal_InvMass = ROOT.TH1F("h1_WPlusCal_InvMass", "",55,70,90)
+        h1_WPlusWMinusCal_dR = ROOT.TH1F("h1_WPlusWMinusCal_dR", "",25,0,6)
+        h2_WPlusWMinusCal_dR_pT = ROOT.TH2F("h2_WPlusWMinusCal_dR_pT", "", 25,0,6, 35,0,700)
+        h1_WMinus_pt = ROOT.TH1F("h1_WMinus_pt", "",35,0,700)
+        h1_WMinus_eta = ROOT.TH1F("h1_WMinus_eta", "",25,-5,5)
+        h1_WMinus_phi = ROOT.TH1F("h1_WMinus_phi", "",25,-5,5)
+        h1_WMinus_InvMass = ROOT.TH1F("h1_WMinus_InvMass", "",55,70,90)
+        h1_WPlus_pt = ROOT.TH1F("h1_WPlus_pt", "",35,0,700)
+        h1_WPlus_eta = ROOT.TH1F("h1_WPlus_eta", "",25,-5,5)
+        h1_WPlus_phi = ROOT.TH1F("h1_WPlus_phi", "",25,-5,5)
+        h1_WPlus_InvMass = ROOT.TH1F("h1_WPlus_InvMass", "",55,70,90)
+        h1_WPlusWminus_dR = ROOT.TH1F("h1_WPlusWminus_dR", "",25,0,6)
+        h2_WPlusWminus_dR_pT = ROOT.TH2F("h2_WPlusWminus_dR_pT", "", 25,0,6, 35,0,700)
+        h1_WPlusWminus_M = ROOT.TH1F("h1_WPlusWminus_M", "",55,115,135)
+
         count_events = 0
         for ip,path in enumerate(paths):
             if ip == max_files: break 
@@ -89,88 +151,214 @@ for iv,v in enumerate(vs):
                     pdgIDs = params[2]
                     #print "particle = ",particle,"\tnparticles = ",nparticles,"\tpdgIDs = ",pdgIDs
                     #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]
-                    print "="*30
+                    #print "="*30
+                    
+                    PhotonFromHiggs = []
+                    QuarkFromWp = []
+                    QuarkFromWm = []
+                    WFromHiggs = []
+                    Higgs = []
+
                     for p in genParticles:
                        if p.isHardProcess():
                           h_pdgID_isHardProcess.Fill(p.pdgId())
                           h_pdgID_isHardProcess_status.Fill(p.status())
-                          if abs(p.pdgId()) < 5: h_pdgID_isHardProcess_status_q.Fill(p.status())
-                          if abs(p.pdgId()) == 21: h_pdgID_isHardProcess_status_g.Fill(p.status())
-                          if abs(p.pdgId()) == 22: h_pdgID_isHardProcess_status_a.Fill(p.status())
-                          if abs(p.pdgId()) == 24: h_pdgID_isHardProcess_status_w.Fill(p.status())
-                          if abs(p.pdgId()) == 25: h_pdgID_isHardProcess_status_h.Fill(p.status())
-                          if p.pdgId() == -24: print p.daughter(0).pdgId(),"\t",p.daughter(1).pdgId()
-                          if p.pdgId() == 24: print p.daughter(0).pdgId(),"\t",p.daughter(1).pdgId()
-                          if abs(p.pdgId()) < 5:
-                             print p.pdgId(),"\t",p.mother(0).pdgId()
-                          #print p.pdgId()
-                       #if p.isHardProcess() and abs(p.pdgId()) == 24: 
-                       #if abs(p.pdgId()) == 24: 
-                       #   print p.pdgId(),"\t",p.status(),"\t",type(p)
-                    #print "="*30
-                    #for p in ak4GenJets:
-                    #   print p.pt()
-                    #print "="*30
-                    #for p in ak8GenJets:
-                    #   print p.pt()
-                    #ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 22)]   
-                    #print "particle = ",ps[0].pdgId(),"\t",ps[1].pdgId()
-                    #print "particles = ",type(ps),"\t",ps[0].pdgId()
-                    #for i, pp in enumerate(ps):
-                    #   print type(pp),"\t",pp.pdgId()
-                    #for i,p in enumerate(ps): print p[i].pdgId(),"\t",
-                    #print "\n\n.....\n"
+                          #print type(p.p4())
+                          if abs(p.pdgId()) < 5: 
+                             h_pdgID_isHardProcess_status_q.Fill(p.status())
+                          if abs(p.pdgId()) == 21: 
+                             h_pdgID_isHardProcess_status_g.Fill(p.status())
+                          if abs(p.pdgId()) == 22: 
+                             h_pdgID_isHardProcess_status_a.Fill(p.status())
+                          if abs(p.pdgId()) == 24: 
+                             h_pdgID_isHardProcess_status_w.Fill(p.status())
+                          if abs(p.pdgId()) == 25: 
+                             h_pdgID_isHardProcess_status_h.Fill(p.status())
+                          #if p.pdgId() == -24: print p.pdgId(),'\t',p.daughter(0).pdgId(),'\t',p.status(),'\t',p.daughter(0).status()
+                          #if p.pdgId() == 24: print p.pdgId(),'\t',p.daughter(0).pdgId(),'\t',p.status(),'\t',p.daughter(0).status()
 
-                    # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs and abs(p.daughter(0).pdgId() == 25)]   
-                    # ps = [p for p in genParticles if p.isHardProcess() and abs(p.pdgId()) in pdgIDs]   
-                    # for p in ps:
-                    #     print'p = ',p.p4()
-                    #if v[0] == 'pt':
-                    #    val = ps[0].p4().pt() 
+                          if ( abs(p.pdgId()) == 22 and 
+                               p.mother(0).pdgId() == 25 and 
+                               (p.status() == 23 or p.status() == 1)
+                             ): 
+                             PhotonFromHiggs.append(p.p4())
+                          if ( abs(p.pdgId()) < 5 and 
+                               p.mother(0).pdgId() == 24 and 
+                               p.status() == 23
+                             ): 
+                             QuarkFromWp.append(p.p4())
+                          if ( abs(p.pdgId()) < 5 and 
+                               p.mother(0).pdgId() == -24 and 
+                               p.status() == 23
+                             ): 
+                             QuarkFromWm.append(p.p4())
+                          if ( abs(p.pdgId()) == 24 and 
+                               abs(p.mother(0).pdgId()) == 25 and 
+                               p.status() == 22 and
+                               abs(p.daughter(0).pdgId()) < 5
+                             ): 
+                             WFromHiggs.append(p.p4())
+                          if ( abs(p.pdgId()) == 25 and
+                               #( abs(p.daughter(0).pdgId()) == 22 or
+                               #  abs(p.daughter(0).pdgId()) == 24
+                               #) and
+                               p.status() == 22
+                             ):
+                             Higgs.append(p.p4())
+                             #print "daughter = ",abs(p.daughter(0).pdgId()),"\tStatus = ",p.daughter(0).status()
+                          """
+                          if ( abs(p.pdgId()) == 25 and 
+                               p.status() == 22 and 
+                               ( ( p.daughter(0).pdgId() == 22 and 
+                                   ( p.daughter(0).status() == 23 or p.daughter(0).status() == 1 ) 
+                                 ) or 
+                                 ( abs(p.daughter(0).pdgId())==24 and 
+                                   abs(p.daughter(0).daughter(0).pdgId()) < 5  
+                                 )
+                               )
+                              ): 
+                              Higgs.append(p.p4())
+                          """
+                    #print "*"*30
+                    #print "Size: Photons = ",len(PhotonFromHiggs)
+                    #print "Size: QuarkFromWp = ",len(QuarkFromWp)
+                    #print "Size: QuarkFromWm = ",len(QuarkFromWm)
+                    #print "Size: WFromHiggs = ",len(WFromHiggs)
+                    #print "Size: Higgs = ",len(Higgs)
+                    ##print "Higgs pt = ",Higgs[0].pt(),'\t',Higgs[1].pt()
+                    ##print "Photons pt = ",PhotonFromHiggs[0].pt(),'\t',PhotonFromHiggs[1].pt()
+                    if not (len(PhotonFromHiggs) == 2 and len(QuarkFromWp) == 2 and len(QuarkFromWm) == 2 and len(WFromHiggs) == 2 and len(Higgs) == 2): 
+                      continue
 
-                    #if nparticles == 4:
-                    #    if v[0] == 'invm':
+                    Higgs = order_particle_4vec(Higgs)
+                    PhotonFromHiggs = order_particle_4vec(PhotonFromHiggs)
+                    QuarkFromWp = order_particle_4vec(QuarkFromWp)
+                    QuarkFromWm = order_particle_4vec(QuarkFromWm)
+                    WFromHiggs = order_particle_4vec(WFromHiggs)
+                    
+                    #Fill photon variables
+                    h1_Photon0_pt.Fill(PhotonFromHiggs[0].pt())
+                    h1_Photon1_pt.Fill(PhotonFromHiggs[1].pt())
+                    h1_Photon0_eta.Fill(PhotonFromHiggs[0].eta())
+                    h1_Photon1_eta.Fill(PhotonFromHiggs[1].eta())
+                    h1_Photon0_phi.Fill(PhotonFromHiggs[0].phi())
+                    h1_Photon1_phi.Fill(PhotonFromHiggs[1].phi())
+                    h1_Photon_dR.Fill( ROOT.Math.VectorUtil.DeltaR(PhotonFromHiggs[0], PhotonFromHiggs[1]) )
+                    h2_Photon_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR(PhotonFromHiggs[0], PhotonFromHiggs[1]), (PhotonFromHiggs[0]+PhotonFromHiggs[1]).pt()) 
+                    h1_Photon_InvMass.Fill( (PhotonFromHiggs[0] + PhotonFromHiggs[1]).M())
+
+
+                    #Fill jets from w+ variables
+                    h1_WPlusJets0_pt.Fill(QuarkFromWp[0].pt())
+                    h1_WPlusJets1_pt.Fill(QuarkFromWp[1].pt())
+                    h1_WPlusJets0_eta.Fill(QuarkFromWp[0].eta())
+                    h1_WPlusJets1_eta.Fill(QuarkFromWp[1].eta())
+                    h1_WPlusJets0_phi.Fill(QuarkFromWp[0].phi())
+                    h1_WPlusJets1_phi.Fill(QuarkFromWp[1].phi())
+                    h1_WPlusJets_dR.Fill( ROOT.Math.VectorUtil.DeltaR(QuarkFromWp[0], QuarkFromWp[1]) )
+                    h2_WPlusJets_dR_pT.Fill( ROOT.Math.VectorUtil.DeltaR(QuarkFromWp[0], QuarkFromWp[1]), (QuarkFromWp[0] + QuarkFromWp[1]).pt())
+
+                    #Fill jets from w- variables
+                    h1_WMinusJets0_pt.Fill(QuarkFromWm[0].pt())
+                    h1_WMinusJets1_pt.Fill(QuarkFromWm[1].pt())
+                    h1_WMinusJets0_eta.Fill(QuarkFromWm[0].eta())
+                    h1_WMinusJets1_eta.Fill(QuarkFromWm[1].eta())
+                    h1_WMinusJets0_phi.Fill(QuarkFromWm[0].phi())
+                    h1_WMinusJets1_phi.Fill(QuarkFromWm[1].phi())
+                    h1_WMinusJets_dR.Fill( ROOT.Math.VectorUtil.DeltaR(QuarkFromWm[0], QuarkFromWm[1]) )
+                    h2_WMinusJets_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR(QuarkFromWm[0], QuarkFromWm[1]), (QuarkFromWm[0]+QuarkFromWm[1]).pt())
+
+                    # Fill W's attribute calculated from 4-vector
+                    h1_WMinusCal_pt.Fill( (QuarkFromWp[0]+QuarkFromWp[1]).pt() )
+                    h1_WMinusCal_eta.Fill( (QuarkFromWp[0]+QuarkFromWp[1]).eta() )
+                    h1_WMinusCal_phi.Fill( (QuarkFromWp[0]+QuarkFromWp[1]).phi() )
+                    h1_WMinusCal_InvMass.Fill( (QuarkFromWp[0]+QuarkFromWp[1]).M() )
+
+                    h1_WPlusCal_pt.Fill( (QuarkFromWm[0]+QuarkFromWm[1]).pt() )
+                    h1_WPlusCal_eta.Fill( (QuarkFromWm[0]+QuarkFromWm[1]).eta() )
+                    h1_WPlusCal_phi.Fill( (QuarkFromWm[0]+QuarkFromWm[1]).phi() )
+                    h1_WPlusCal_InvMass.Fill((QuarkFromWm[0]+QuarkFromWm[1]).M() )
+
+                    h1_WPlusWMinusCal_dR.Fill( ROOT.Math.VectorUtil.DeltaR((QuarkFromWm[0]+QuarkFromWm[1]), (QuarkFromWp[0]+QuarkFromWp[1])) )
+                    h2_WPlusWMinusCal_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR((QuarkFromWm[0]+QuarkFromWm[1]), (QuarkFromWp[0]+QuarkFromWp[1])), (QuarkFromWm[0]+QuarkFromWm[1]+QuarkFromWp[0]+QuarkFromWp[1]).pt())
+                    
+                    # Fill W's attribute access directly
+                    h1_WMinus_pt.Fill(WFromHiggs[0].pt())
+                    h1_WMinus_eta.Fill(WFromHiggs[0].eta())
+                    h1_WMinus_phi.Fill(WFromHiggs[0].phi())
+                    h1_WMinus_InvMass.Fill(WFromHiggs[0].M())
+
+                    h1_WPlus_pt.Fill(WFromHiggs[1].pt())
+                    h1_WPlus_eta.Fill(WFromHiggs[1].eta())
+                    h1_WPlus_phi.Fill(WFromHiggs[1].phi())
+                    h1_WPlus_InvMass.Fill(WFromHiggs[1].M())
+                    h1_WPlusWminus_dR.Fill( ROOT.Math.VectorUtil.DeltaR(WFromHiggs[0], WFromHiggs[1]) )
+                    h2_WPlusWminus_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR(WFromHiggs[0], WFromHiggs[1]), (WFromHiggs[0]+WFromHiggs[1]).pt())
+                    h1_WPlusWminus_M.Fill( (WFromHiggs[0]+WFromHiggs[1]).M())
+                    
+
+                    
+
                     #        val = invmass(ps[0].p4(),ps[1].p4())
-                    #        # val = ps[0].p4().pt()
-                    #        # if particle == 'R':
-                    #            # avoid double count 
-                    #        h1.Fill(val)
-                    #        # get invmass 
-                    #else: 
-                    #    for p in ps:
-                    #        #val = eval("p." + v[0] + "()")
-                    #        val = ps[0].p4().pt()
-                    #        #h1.Fill(val)
         output_path = ol + mass + '_' + channel + '_' + particle + '_' + variable 
         c1 = ROOT.TCanvas()
         color = dir[4]
-        h_pdgID_isHardProcess.SetLineColor(eval(color))
-        h_pdgID_isHardProcess.Draw() 
-        c1.SaveAs("h_pdgID_isHardProcess" + ".png")
-        h_pdgID_isHardProcess.SaveAs("h_pdgID_isHardProcess" + ".C")
-        h_pdgID_isHardProcess.SaveAs("h_pdgID_isHardProcess" + ".root")    
-        c1.SetLogy(1)
-        c1.SaveAs("h_pdgID_isHardProcess" + "Log.png")
-        c1.SetLogy(0)
-        h_pdgID_isHardProcess_status.SetLineColor(eval(color))
-        h_pdgID_isHardProcess_status.Draw() 
-        c1.SaveAs("h_pdgID_isHardProcess_status" + ".png")
-        h_pdgID_isHardProcess_status.SaveAs("h_pdgID_isHardProcess_status" + ".C")
-        h_pdgID_isHardProcess_status.SaveAs("h_pdgID_isHardProcess_status" + ".root")    
-        c1.SetLogy(1)
-        c1.SaveAs("h_pdgID_isHardProcess_status" + "Log.png")
-        c1.SetLogy(0)
-        h_pdgID_isHardProcess_status_q.Draw()
-        c1.SaveAs("h_pdgID_isHardProcess_status_q.png")
-        h_pdgID_isHardProcess_status_g.Draw()
-        c1.SaveAs("h_pdgID_isHardProcess_status_g.png")
-        h_pdgID_isHardProcess_status_a.Draw()
-        c1.SaveAs("h_pdgID_isHardProcess_status_a.png")
-        h_pdgID_isHardProcess_status_w.Draw()
-        c1.SaveAs("h_pdgID_isHardProcess_status_w.png")
-        h_pdgID_isHardProcess_status_h.Draw()
-        c1.SaveAs("h_pdgID_isHardProcess_status_h.png")
         print 'h_pdgID_isHardProcess entry = ',h_pdgID_isHardProcess.GetEntries()
+
+        h_pdgID_isHardProcess.Draw();  c1.SaveAs("h_pdgID_isHardProcess.png")
+        h_pdgID_isHardProcess_status.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status.png")
+        h_pdgID_isHardProcess_status_q.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status_q.png")
+        h_pdgID_isHardProcess_status_g.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status_g.png")
+        h_pdgID_isHardProcess_status_a.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status_a.png")
+        h_pdgID_isHardProcess_status_w.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status_w.png")
+        h_pdgID_isHardProcess_status_h.Draw();  c1.SaveAs("h_pdgID_isHardProcess_status_h.png")
+        h1_Photon0_pt.Draw();  c1.SaveAs("h1_Photon0_pt.png")
+        h1_Photon1_pt.Draw();  c1.SaveAs("h1_Photon1_pt.png")
+        h1_Photon0_eta.Draw();  c1.SaveAs("h1_Photon0_eta.png")
+        h1_Photon1_eta.Draw();  c1.SaveAs("h1_Photon1_eta.png")
+        h1_Photon0_phi.Draw();  c1.SaveAs("h1_Photon0_phi.png")
+        h1_Photon1_phi.Draw();  c1.SaveAs("h1_Photon1_phi.png")
+        h1_Photon_dR.Draw();  c1.SaveAs("h1_Photon_dR.png")
+        h2_Photon_dR_pT.Draw("colz"); c1.SaveAs("h2_Photon_dR_pT.png")
+        h1_Photon_InvMass.Draw();  c1.SaveAs("h1_Photon_InvMass.png")
+        h1_WPlusJets0_pt.Draw();  c1.SaveAs("h1_WPlusJets0_pt.png")
+        h1_WPlusJets1_pt.Draw();  c1.SaveAs("h1_WPlusJets1_pt.png")
+        h1_WPlusJets0_eta.Draw();  c1.SaveAs("h1_WPlusJets0_eta.png")
+        h1_WPlusJets1_eta.Draw();  c1.SaveAs("h1_WPlusJets1_eta.png")
+        h1_WPlusJets0_phi.Draw();  c1.SaveAs("h1_WPlusJets0_phi.png")
+        h1_WPlusJets1_phi.Draw();  c1.SaveAs("h1_WPlusJets1_phi.png")
+        h1_WPlusJets_dR.Draw();  c1.SaveAs("h1_WPlusJets_dR.png")
+        h2_WPlusJets_dR_pT.Draw("colz"); c1.SaveAs("h2_WPlusJets_dR_pT.png")
+        h1_WMinusJets0_pt.Draw();  c1.SaveAs("h1_WMinusJets0_pt.png")
+        h1_WMinusJets1_pt.Draw();  c1.SaveAs("h1_WMinusJets1_pt.png")
+        h1_WMinusJets0_eta.Draw();  c1.SaveAs("h1_WMinusJets0_eta.png")
+        h1_WMinusJets1_eta.Draw();  c1.SaveAs("h1_WMinusJets1_eta.png")
+        h1_WMinusJets0_phi.Draw();  c1.SaveAs("h1_WMinusJets0_phi.png")
+        h1_WMinusJets1_phi.Draw();  c1.SaveAs("h1_WMinusJets1_phi.png")
+        h1_WMinusJets_dR.Draw();  c1.SaveAs("h1_WMinusJets_dR.png")
+        h2_WMinusJets_dR_pT.Draw("colz"); c1.SaveAs("h2_WMinusJets_dR_pT.png")
+        h1_WMinusCal_pt.Draw();  c1.SaveAs("h1_WMinusCal_pt.png")
+        h1_WMinusCal_eta.Draw();  c1.SaveAs("h1_WMinusCal_eta.png")
+        h1_WMinusCal_phi.Draw();  c1.SaveAs("h1_WMinusCal_phi.png")
+        h1_WMinusCal_InvMass.Draw();  c1.SaveAs("h1_WMinusCal_InvMass.png")
+        h1_WPlusCal_pt.Draw();  c1.SaveAs("h1_WPlusCal_pt.png")
+        h1_WPlusCal_eta.Draw();  c1.SaveAs("h1_WPlusCal_eta.png")
+        h1_WPlusCal_phi.Draw();  c1.SaveAs("h1_WPlusCal_phi.png")
+        h1_WPlusCal_InvMass.Draw();  c1.SaveAs("h1_WPlusCal_InvMass.png")
+        h1_WPlusWMinusCal_dR.Draw();  c1.SaveAs("h1_WPlusWMinusCal_dR.png")
+        h2_WPlusWMinusCal_dR_pT.Draw("colz"); c1.SaveAs("h2_WPlusWMinusCal_dR_pT.png")
+        h1_WMinus_pt.Draw();  c1.SaveAs("h1_WMinus_pt.png")
+        h1_WMinus_eta.Draw();  c1.SaveAs("h1_WMinus_eta.png")
+        h1_WMinus_phi.Draw();  c1.SaveAs("h1_WMinus_phi.png")
+        h1_WMinus_InvMass.Draw();  c1.SaveAs("h1_WMinus_InvMass.png")
+        h1_WPlus_pt.Draw();  c1.SaveAs("h1_WPlus_pt.png")
+        h1_WPlus_eta.Draw();  c1.SaveAs("h1_WPlus_eta.png")
+        h1_WPlus_phi.Draw();  c1.SaveAs("h1_WPlus_phi.png")
+        h1_WPlus_InvMass.Draw();  c1.SaveAs("h1_WPlus_InvMass.png")
+        h1_WPlusWminus_dR.Draw();  c1.SaveAs("h1_WPlusWminus_dR.png")
+        h2_WPlusWminus_dR_pT.Draw("colz"); c1.SaveAs("h2_WPlusWminus_dR_pT.png")
+        h1_WPlusWminus_M.Draw(); c1.SaveAs("h1_WPlusWminus_M.png")
+
         histos.append(h_pdgID_isHardProcess)
         print "total events = ",count_events
 
