@@ -14,12 +14,30 @@ from DataFormats.FWLite import Handle, Runs, Lumis, Events  #, ChainEvent
 import sys
 import os 
 from os import listdir
+from array import array
+
+
+NRGBs = 5;
+NCont = 255;
+stops = [ 0.00, 0.34, 0.61, 0.84, 1.00 ]
+red   = [ 0.00, 0.00, 0.87, 1.00, 0.51 ]
+green = [ 0.00, 0.81, 1.00, 0.20, 0.00 ]
+blue  = [ 0.51, 1.00, 0.12, 0.00, 0.00 ]
+
+s = array('d', stops)
+r = array('d', red)
+g = array('d', green)
+b = array('d', blue)
+
+ROOT.TColor.CreateGradientColorTable(NRGBs, s, r, g, b, NCont);
+ROOT.gStyle.SetNumberContours(NCont);
+
+
 print '.'
 print 'Plotting HH Variables'
 print '.'
 ol = '/uscms/home/rasharma/nobackup/double-higgs/HH_WWgg/Gen_Plot/myplots/'
-# me, genHandle = -1, Handle('vector<reco::GenParticle>')
-# summary = Handle('<LumiSummary>')
+
 # For each variable
 for iv,v in enumerate(vs):
     variable = v[0]
@@ -52,39 +70,26 @@ for iv,v in enumerate(vs):
         xmin = v[2]
         xmax = v[3] # Mass_Channel_Variable 
 
-        #Ha1 = ROOT.TLorentzVector()
-        #Ha2 = ROOT.TLorentzVector()
-        #Ha = ROOT.TLorentzVector()
-        #HW1J1 = ROOT.TLorentzVector()
-        #HW1J2 = ROOT.TLorentzVector()
-        #HW1 = ROOT.TLorentzVector()
-        #HW2J1 = ROOT.TLorentzVector()
-        #HW2J2 = ROOT.TLorentzVector()
-        #HW2 = ROOT.TLorentzVector()
-        #HW = ROOT.TLorentzVector()
-
-
-
-        plot_title = mass + ', ' + channel 
-        h1 = ROOT.TH1F('h1',plot_title,xbins,xmin,xmax)
-        h_pdgID_isHardProcess = ROOT.TH1F('h_pdgID_isHardProcess', 'particles from isHardProcess',30,0,30)
-        h_pdgID_isHardProcess_status = ROOT.TH1F('h_pdgID_isHardProcess_status', 'particles from isHardProcess status',30,0,30)
-        h_pdgID_isHardProcess_status_q = ROOT.TH1F('h_pdgID_isHardProcess_status_q', 'particles from isHardProcess status from q',30,0,30)
-        h_pdgID_isHardProcess_status_g = ROOT.TH1F('h_pdgID_isHardProcess_status_g', 'particles from isHardProcess status from g',30,0,30)
-        h_pdgID_isHardProcess_status_a = ROOT.TH1F('h_pdgID_isHardProcess_status_a', 'particles from isHardProcess status from a',30,0,30)
-        h_pdgID_isHardProcess_status_w = ROOT.TH1F('h_pdgID_isHardProcess_status_w', 'particles from isHardProcess status from w',30,0,30)
-        h_pdgID_isHardProcess_status_h = ROOT.TH1F('h_pdgID_isHardProcess_status_h', 'particles from isHardProcess status from h',30,0,30)
+        #plot_title = mass + ', ' + channel 
+        #h1 = ROOT.TH1F('h1',plot_title,xbins,xmin,xmax)
+        h_pdgID_isHardProcess = ROOT.TH1F('h_pdgID_isHardProcess', 'particles from isHardProcess;pdgID;',30,0,30)
+        h_pdgID_isHardProcess_status = ROOT.TH1F('h_pdgID_isHardProcess_status', 'particles from isHardProcess status;particle status;',30,0,30)
+        h_pdgID_isHardProcess_status_q = ROOT.TH1F('h_pdgID_isHardProcess_status_q', 'particles from isHardProcess status from q;quarks status;',30,0,30)
+        h_pdgID_isHardProcess_status_g = ROOT.TH1F('h_pdgID_isHardProcess_status_g', 'particles from isHardProcess status from g;gluons status;',30,0,30)
+        h_pdgID_isHardProcess_status_a = ROOT.TH1F('h_pdgID_isHardProcess_status_a', 'particles from isHardProcess status from a;photons status;',30,0,30)
+        h_pdgID_isHardProcess_status_w = ROOT.TH1F('h_pdgID_isHardProcess_status_w', 'particles from isHardProcess status from w;W-bosons status;',30,0,30)
+        h_pdgID_isHardProcess_status_h = ROOT.TH1F('h_pdgID_isHardProcess_status_h', 'particles from isHardProcess status from h;Higgs status;',30,0,30)
 
         h1_Photon0_pt = ROOT.TH1F("h1_Photon0_pt", ";Leading Photon p_{T} (GeV);",35,0,700)
-        h1_Photon1_pt = ROOT.TH1F("h1_Photon1_pt", "",35,0,700)
-        h1_Photon0_eta = ROOT.TH1F("h1_Photon0_eta", "",25,-5,5)
-        h1_Photon1_eta = ROOT.TH1F("h1_Photon1_eta", "",25,-5,5)
-        h1_Photon0_phi = ROOT.TH1F("h1_Photon0_phi", "",25,-5,5)
-        h1_Photon1_phi = ROOT.TH1F("h1_Photon1_phi", "",25,-5,5)
-        h1_Photon_dR = ROOT.TH1F("h1_Photon_dR", "",25,0,6)
-        h2_Photon_dR_pT = ROOT.TH2F("h2_Photon_dR_pT", "", 25,0,6, 35,0,700)
-        h1_Photon_InvMass = ROOT.TH1F("h1_Photon_InvMass", "",55,115,135)
-        h1_WPlusJets0_pt = ROOT.TH1F("h1_WPlusJets0_pt", "",35,0,700)
+        h1_Photon1_pt = ROOT.TH1F("h1_Photon1_pt", ";Sub-leading Photon p_{T} (GeV);",35,0,700)
+        h1_Photon0_eta = ROOT.TH1F("h1_Photon0_eta", ";Leading Photon #eta;",25,-5,5)
+        h1_Photon1_eta = ROOT.TH1F("h1_Photon1_eta", ";Sub-Leading Photon #eta;",25,-5,5)
+        h1_Photon0_phi = ROOT.TH1F("h1_Photon0_phi", ";Leading Photon #phi;",25,-5,5)
+        h1_Photon1_phi = ROOT.TH1F("h1_Photon1_phi", ";Sub-Leading Photon #phi",25,-5,5)
+        h1_Photon_dR = ROOT.TH1F("h1_Photon_dR", ";#delta(R) between photons;",25,0,6)
+        h2_Photon_dR_pT = ROOT.TH2F("h2_Photon_dR_pT", ";#delta(R) between photons;di-photon p_{T} (GeV)", 25,0,6, 35,0,700)
+        h1_Photon_InvMass = ROOT.TH1F("h1_Photon_InvMass", ";di-photon Invariant mass (GeV);",55,115,135)
+        h1_WPlusJets0_pt = ROOT.TH1F("h1_WPlusJets0_pt", ";;",35,0,700)
         h1_WPlusJets1_pt = ROOT.TH1F("h1_WPlusJets1_pt", "",35,0,700)
         h1_WPlusJets0_eta = ROOT.TH1F("h1_WPlusJets0_eta", "",25,-5,5)
         h1_WPlusJets1_eta = ROOT.TH1F("h1_WPlusJets1_eta", "",25,-5,5)
@@ -121,6 +126,7 @@ for iv,v in enumerate(vs):
         h1_WPlusWminus_dR = ROOT.TH1F("h1_WPlusWminus_dR", "",25,0,6)
         h2_WPlusWminus_dR_pT = ROOT.TH2F("h2_WPlusWminus_dR_pT", "", 25,0,6, 35,0,700)
         h1_WPlusWminus_M = ROOT.TH1F("h1_WPlusWminus_M", "",55,115,135)
+        h2_HPhotonHWBosons_dR_pT = ROOT.TH2F("h2_HPhotonHWBosons_dR_pT", ";#delta(R) between Higgs pair; p_{T} of di-Higgs system (GeV)", 25,0,6, 35,0,700)
 
         count_events = 0
         for ip,path in enumerate(paths):
@@ -295,6 +301,7 @@ for iv,v in enumerate(vs):
                     h1_WPlusWminus_dR.Fill( ROOT.Math.VectorUtil.DeltaR(WFromHiggs[0], WFromHiggs[1]) )
                     h2_WPlusWminus_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR(WFromHiggs[0], WFromHiggs[1]), (WFromHiggs[0]+WFromHiggs[1]).pt())
                     h1_WPlusWminus_M.Fill( (WFromHiggs[0]+WFromHiggs[1]).M())
+                    h2_HPhotonHWBosons_dR_pT.Fill(ROOT.Math.VectorUtil.DeltaR(PhotonFromHiggs[0] + PhotonFromHiggs[1],WFromHiggs[0]+WFromHiggs[1]), (WFromHiggs[0]+WFromHiggs[1]+PhotonFromHiggs[0] + PhotonFromHiggs[1]).pt())
                     
 
                     
@@ -358,25 +365,9 @@ for iv,v in enumerate(vs):
         h1_WPlusWminus_dR.Draw();  c1.SaveAs("h1_WPlusWminus_dR.png")
         h2_WPlusWminus_dR_pT.Draw("colz"); c1.SaveAs("h2_WPlusWminus_dR_pT.png")
         h1_WPlusWminus_M.Draw(); c1.SaveAs("h1_WPlusWminus_M.png")
+        h2_HPhotonHWBosons_dR_pT.Draw("colz"); c1.SaveAs("h2_HPhotonHWBosons_dR_pT.png")
 
         histos.append(h_pdgID_isHardProcess)
         print "total events = ",count_events
 
     print'histos = ',histos 
-
-    # c2 = ROOT.TCanvas()
-    # for ih,h in enumerate(histos):
-    #     print'h = ',h
-    #     h.SetStats(0)
-    #     if ih == 0:
-    #         h.Draw()
-    #     else:
-    #         h.Draw('same')
-    # xmin, ymin, xmax, ymax = 0.6,0.5,0.8,0.7
-    # legend = ROOT.TLegend(xmin,ymin,xmax,ymax)
-    # for ih,h in enumerate(histos):
-    #     legend.AddEntry(h)
-    # legend.Draw('same')
-    # c2.Update()
-    # c2.SaveAs(ol + variable + '_Combined.png')
-                                   
