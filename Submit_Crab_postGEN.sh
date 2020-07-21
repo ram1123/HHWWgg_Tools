@@ -75,8 +75,8 @@ submit_crab_postGEN(){
 
     echo "chosen threads: $chosen_threads "
     cd $localWorkingArea$cmssw_v/src/
-    # cd /afs/cern.ch/work/a/atishelm/private/HH_WWgg/$cmssw_v/src/ # Directory where config file was conceived. Need to be in same CMSSW for crab config 
-    cmsenv
+    #cmsenv
+    eval `scram runtime -sh`
 
     # Check if there is a VOMS proxy for using CRAB 
     check_proxy 
@@ -193,7 +193,7 @@ submit_crab_postGEN(){
     #echo "config.Data.unitsPerJob = $chosen_jobs" >> TmpCrabConfig.py # Number of output files (need to verify this for DR1)  
 
     #echo "#config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB()) " >> TmpCrabConfig.py
-    echo "config.Data.outLFNDirBase = '/store/group/phys_higgs/resonant_HH/RunII/MicroAOD/HHWWggSignal/'" >> TmpCrabConfig.py
+    echo "config.Data.outLFNDirBase = '/store/user/rasharma/double-higgs/SignalSample/'" >> TmpCrabConfig.py
     #echo "config.Data.outLFNDirBase = '/store/user/atishelm/'" >> TmpCrabConfig.py
     # publish if MINIAOD step only 
 
@@ -221,16 +221,21 @@ submit_crab_postGEN(){
     
     #echo "pwd = $PWD" 
     #echo "ccname = $ccname"
+    echo "======================================"
+    cat TmpCrabConfig.py
+    echo "======================================"
 
     cp TmpCrabConfig.py $ccname
+    echo "PWD = ${PWD}"
+    echo "ccname = ${ccname}"
     #mv $ccname ../../crab_configs/$ccname  
     mv $ccname crab_configs/$ccname  
     rm TmpCrabConfig.py 
 
-    #crab submit -c ../../crab_configs/$ccname 
+    crab submit -c crab_configs/$ccname 
 
     # Just need last two 
-    crab submit -c crab_configs/$ccname 
-    crab status 
+    #crab submit -c crab_configs/$ccname 
+    #crab status 
 
     }

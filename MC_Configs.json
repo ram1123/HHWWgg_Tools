@@ -1,9 +1,9 @@
 [
-			{ 
-					"step"      : "GEN-SIM",
-					"events"    : 50000,
-					"jobs_jobsize"      : 200,
-					"fragment_directory"  : "ggF_X250_WWgg_qqqqgg",
-					"pileup"              : "wPU" 
-			}
+     { 
+     		"step"      : "DR1",
+     		"events"    : 50000,
+     		"jobs_jobsize"      : 1,
+     		"fragment_directory"  : "/eos/uscms/store/user/rasharma/double-higgs/SignalSample/ggF_X250_WWgg_qqqqgg/50000events_GEN-SIM_CrabConfig/200315_192048/0000/",
+     		"pileup"              : "wPU" 
+     }
 ]

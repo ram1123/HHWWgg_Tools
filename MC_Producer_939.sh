@@ -169,6 +169,11 @@ then
 
     DR1Config=$cmssw_v/src/cmssw_configs/
     DR2Config=$cmssw_v/src/cmssw_configs/
+    echo "DR1Config = ${DR1Config}"
+    echo "DR2Config = ${DR1Config}"
+    echo "RK: Creating directories"
+    mkdir ${DR1Config}
+    mkdir ${DR2Config}
     #DR1Config+=$EndofPath 
     DR1Config+=$EndofSinglePath 
     #DR2Config+=$EndofPath 
@@ -225,6 +230,9 @@ then
 
             #cmsDriver.py step1 --filein file:$GenSimOutput --fileout file:$DR1Output  --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer17PrePremix-MCv2_correctPU_94X_mc2017_realistic_v9-v1/GEN-SIM-DIGI-RAW" --mc --eventcontent PREMIXRAW --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v11 --step DIGIPREMIX_S2,DATAMIX,L1,DIGI2RAW,HLT:2e34v40 --nThreads $chosen_threads --datamix PreMix --era Run2_2017 --python_filename $DR1Config --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $chosen_events
 
+	    echo "PWD: ${PWD}"
+	    #mkdir ${DR1Config}
+            echo "cmsDriver.py step1 --filein $paths_string --fileout file:$DR1Output  --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer17PrePremix-MCv2_correctPU_94X_mc2017_realistic_v9-v1/GEN-SIM-DIGI-RAW" --mc --eventcontent PREMIXRAW --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v11 --step DIGIPREMIX_S2,DATAMIX,L1,DIGI2RAW,HLT:2e34v40 --nThreads $chosen_threads --datamix PreMix --era Run2_2017 --python_filename $DR1Config --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $chosen_events"
             cmsDriver.py step1 --filein $paths_string --fileout file:$DR1Output  --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer17PrePremix-MCv2_correctPU_94X_mc2017_realistic_v9-v1/GEN-SIM-DIGI-RAW" --mc --eventcontent PREMIXRAW --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v11 --step DIGIPREMIX_S2,DATAMIX,L1,DIGI2RAW,HLT:2e34v40 --nThreads $chosen_threads --datamix PreMix --era Run2_2017 --python_filename $DR1Config --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $chosen_events
 
             # Need to edit cmssw config to shuffle pileup each time 
@@ -269,6 +277,7 @@ then
 
             #cmsDriver.py step1 --filein file:$GenSimOutput --fileout file:$DR1Output --mc --eventcontent RAWSIM --pileup NoPileUp --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v11 --step DIGI,L1,DIGI2RAW,HLT:2e34v40 --nThreads $chosen_threads --era Run2_2017 --python_filename $DR1Config --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $chosen_events
 
+	    echo "PWD: ${PWD}"
             cmsDriver.py step1 --filein $paths_string --fileout file:$DR1Output --mc --eventcontent RAWSIM --pileup NoPileUp --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v11 --step DIGI,L1,DIGI2RAW,HLT:2e34v40 --nThreads $chosen_threads --era Run2_2017 --python_filename $DR1Config --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $chosen_events
 
             # The one below worked once for some reason, while I remember the top one failing, even though they look the same 
@@ -282,7 +291,8 @@ then
 
             #submit_crab_postGEN $DR1Config $cmssw_v $crab_input $chosen_threads $chosen_jobs "${f_paths[@]}"
             #submit_crab_postGEN $DR1Config $cmssw_v $chosen_threads $chosen_job_size $chosen_events "${f_paths[@]}"
-            submit_crab_postGEN $DR1Config $cmssw_v $chosen_threads $chosen_job_size $chosen_step "${f_paths[@]}" 
+
+            #submit_crab_postGEN $DR1Config $cmssw_v $chosen_threads $chosen_job_size $chosen_step "${f_paths[@]}" 
 
             #end_script 
 

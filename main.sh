@@ -16,6 +16,7 @@ do
     #echo "i = $i"
     thisconfigname=config_
     thisconfigname+=$i
+    echo "thisconfigname ${thisconfigname}"
     unset thisconfigname
     thisconfigname=()
     for keyitem in `jq ".[] | .$jsonkey" MC_Configs.json `
